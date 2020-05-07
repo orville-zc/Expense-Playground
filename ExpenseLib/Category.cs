@@ -4,38 +4,40 @@ namespace ExpenseLib
 {
     public static class Category
     {
-        public static Dictionary<int, string> getExpCat()
+        public static Dictionary<int, string> GetExpCat()
         {
-            Dictionary<int, string> cat = new Dictionary<int, string>();
-            cat.Add(0, "Food");
-            cat.Add(1, "Vegetables");
-            cat.Add(2, "Meat");
-            cat.Add(3, "Fruits");
-            cat.Add(4, "Snacks");
-            cat.Add(5, "Restaurant");
-            cat.Add(6, "Electronics");
-            cat.Add(7, "Social");
-            cat.Add(8, "Clothing");
-            cat.Add(9, "Health");
-            cat.Add(10, "Bills");
-            cat.Add(11, "Transportation");
-            cat.Add(12, "Entertainment");
-            cat.Add(13, "Home");
-            cat.Add(14, "Office");
-            cat.Add(15, "Other");
-            return cat;
+            return new Dictionary<int, string>
+            {
+                { 0, "Food" },
+                { 1, "Vegetables" },
+                { 2, "Meat" },
+                { 3, "Fruits" },
+                { 4, "Snacks" },
+                { 5, "Restaurant" },
+                { 6, "Electronics" },
+                { 7, "Social" },
+                { 8, "Clothing" },
+                { 9, "Health" },
+                { 10, "Bills" },
+                { 11, "Transportation" },
+                { 12, "Entertainment" },
+                { 13, "Home" },
+                { 14, "Office" },
+                { 15, "Other" }
+            };
         }
-        //default categories for expenses
+        //default categories with ids for expenses
         public static Dictionary<int, string> getInCat()
         {
-            Dictionary<int, string> cat = new Dictionary<int, string>();
-            cat.Add(0, "Invesments");
-            cat.Add(1, "Salary");
-            cat.Add(2, "Gift");
-            cat.Add(3, "Awards");
-            cat.Add(4, "Other");
-            return cat;
+            return new Dictionary<int, string>
+            {
+                { 0, "Investments" },
+                { 1, "Salary" },
+                { 2, "Gift" },
+                { 3, "Awards" },
+                { 4, "Other" }
+            };
         }
-        //default categories for income
+        //default categories with ids for income
     }
 }

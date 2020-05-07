@@ -1,0 +1,45 @@
+{
+  "category": {
+    "income": [
+      "Investments"
+    ],
+    "expense": [
+      "Food",
+      "Vegetables"
+    ]
+  },
+  "2020": {
+    "3": [
+      {
+        "Amount": 10,
+        "Category": 1,
+        "Date": "2020-04-30",
+        "Exp": true,
+        "Memo": "sth"
+      },
+      {
+        "Amount": 20,
+        "Category": 0,
+        "Date": "2020-04-30",
+        "Exp": true,
+        "Memo": "gf"
+      }
+    ],
+    "4": [
+      {
+        "Amount": 10,
+        "Category": 1,
+        "Date": "2020-05-30",
+        "Exp": true,
+        "Memo": "sth"
+      },
+      {
+        "Amount": 14,
+        "Category": 0,
+        "Date": "2020-05-30",
+        "Exp": true,
+        "Memo": "sd"
+      }
+    ]
+  }
+}
