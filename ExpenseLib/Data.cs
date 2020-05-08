@@ -12,9 +12,8 @@ namespace ExpenseLib
         //used for both income and expenses categories, indicated by the boolan value
         {
             Dictionary<int, string> cat = new Dictionary<int, string>();
-            List<string> inc =
-                income ? json.SelectToken("category.income").ToObject<List<string>>()
-                : json.SelectToken("category.expense").ToObject<List<string>>();
+            List<string> inc = json.SelectToken("category." + (income ? "income" : "expense"))
+                .ToObject<List<string>>();
                 //determine to get income or expense categories
             for (int i = 0; i < inc.Count; i++)
                 cat.Add(i, inc[i]);
@@ -28,38 +27,28 @@ namespace ExpenseLib
             //representing 12 months of every year. the lists hold Record instances
             //which is the records of each months
 
-            List<JToken> tokens = json.Children().ToList();
+            List<JProperty> properties = json.Children<JProperty>().ToList();
             //the first element holds the categories
             //remains are entries for every year
 
-            for (int i = 1; i < tokens.Count; i++)
+            for (int i = 1; i < properties.Count; i++)
             //start from the second element (the first year)
             {
-                int year = Convert.ToInt32(tokens[i].Path);
-                //get the year for the key of dictionary
-
                 List<Record>[] records = new List<Record>[12];
                 //initialize 12 lists of records for each months
 
-                foreach (JToken monthRec in tokens[i].Values())
+                foreach (JProperty monthRec in properties[i].Values())
                 //loop through every object holding the month and records of that month
-                {
-                    int month = Convert.ToInt32(monthRec.Path.Substring(5));
-                    //get the month to determine which list to fill in
-                    //path has the patter of yyyy.Month and the year not needed here
+                    records[Convert.ToInt32(monthRec.Name)]
+                        //get the month to determine which list to fill in
+                        = JsonConvert.DeserializeObject<List<Record>>(
+                            monthRec.Value.ToString());
+                            //get records of the month and convert to string
 
-                    records[month] = JsonConvert.DeserializeObject<List<Record>>(
-                                        monthRec.Values().ToList()[0].ToString());
-                                        //records of the month are kept as an array in json
-                                        //Values() returns the collection of that array
-                                        //there is only one array in the collection
-                                        //use [0] to access it
-                    //convert the records to a list of Record
-                    //save it to the correct place in the array
-                }
-
-                rec.Add(year, records);
+                rec.Add(Convert.ToInt32(properties[i].Name), records);
+                    //get the year and convert to integer
             }
+
             return rec;
         }
     }
