@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace ExpenseLib
 {
@@ -12,7 +13,7 @@ namespace ExpenseLib
         //false for income
         public string Memo { get; set; }
 
-        private void init(decimal amt, int cat, bool exp, string memo)
+        private void Init(decimal amt, int cat, bool exp, string memo)
         {
             Amount = amt;
             Category = cat;
@@ -21,12 +22,14 @@ namespace ExpenseLib
         }
         public Record(decimal amt, int cat, bool exp, string memo)
         {
-            init(amt, cat, exp, memo);
+            Init(amt, cat, exp, memo);
             Date = DateTime.Today;
         }
+
+        [JsonConstructor] //when reading from json, use this constructor
         public Record(decimal amt, int cat, DateTime date, bool exp, string memo)
         {
-            init(amt, cat, exp, memo);
+            Init(amt, cat, exp, memo);
             Date = date;
         }
     }

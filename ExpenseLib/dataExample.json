@@ -1,0 +1,63 @@
+{
+  "category": {
+    "income": [
+      "Investments",
+      "Salary",
+      "Gift",
+      "Awards",
+      "Other"
+    ],
+    "expense": [
+      "Food",
+      "Vegetables",
+      "Meat",
+      "Fruits",
+      "Snacks",
+      "Restaurant",
+      "Electronics",
+      "Social",
+      "Clothing",
+      "Health",
+      "Bills",
+      "Transportation",
+      "Entertainment",
+      "Home",
+      "Office",
+      "Other"
+    ]
+  },
+  "2020": {
+    "3": [
+      {
+        "Amount": 10.0,
+        "Category": 1,
+        "Date": "2020-04-30T00:00:00",
+        "Exp": true,
+        "Memo": "sth"
+      },
+      {
+        "Amount": 20.0,
+        "Category": 0,
+        "Date": "2020-04-30T00:00:00",
+        "Exp": true,
+        "Memo": "gf"
+      }
+    ],
+    "4": [
+      {
+        "Amount": 10.0,
+        "Category": 1,
+        "Date": "2020-05-30T00:00:00",
+        "Exp": true,
+        "Memo": "sth"
+      },
+      {
+        "Amount": 14.0,
+        "Category": 0,
+        "Date": "2020-05-30T00:00:00",
+        "Exp": true,
+        "Memo": "sd"
+      }
+    ]
+  }
+}
