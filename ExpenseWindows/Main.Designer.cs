@@ -1,6 +1,6 @@
 ﻿namespace ExpenseWindows
 {
-    partial class frmMain
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -36,21 +36,31 @@
             this.tsmiSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiView = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAllRec = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiInOnly = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiExpOnly = new System.Windows.Forms.ToolStripMenuItem();
             this.ssMain = new System.Windows.Forms.StatusStrip();
             this.sslDate = new System.Windows.Forms.ToolStripStatusLabel();
             this.sslMsg = new System.Windows.Forms.ToolStripStatusLabel();
             this.sslBalance = new System.Windows.Forms.ToolStripStatusLabel();
             this.sslNet = new System.Windows.Forms.ToolStripStatusLabel();
             this.sslIncome = new System.Windows.Forms.ToolStripStatusLabel();
-            this.sslExpenses = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sslExpense = new System.Windows.Forms.ToolStripStatusLabel();
             this.pnlTree = new System.Windows.Forms.Panel();
             this.tvByMonth = new System.Windows.Forms.TreeView();
             this.pnlChart = new System.Windows.Forms.Panel();
             this.pnlRec = new System.Windows.Forms.Panel();
+            this.gvRecord = new System.Windows.Forms.DataGridView();
             this.msMain.SuspendLayout();
             this.ssMain.SuspendLayout();
             this.pnlTree.SuspendLayout();
+            this.pnlRec.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvRecord)).BeginInit();
             this.SuspendLayout();
             // 
             // msMain
@@ -94,6 +104,7 @@
             this.tsmiSave.Name = "tsmiSave";
             this.tsmiSave.Size = new System.Drawing.Size(143, 26);
             this.tsmiSave.Text = "&Save";
+            this.tsmiSave.Click += new System.EventHandler(this.tsmiSave_Click);
             // 
             // tsmiSaveAs
             // 
@@ -110,15 +121,66 @@
             // 
             // tsmiEdit
             // 
+            this.tsmiEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiCut,
+            this.tsmiCopy,
+            this.tsmiPaste,
+            this.tsmiDelete});
             this.tsmiEdit.Name = "tsmiEdit";
             this.tsmiEdit.Size = new System.Drawing.Size(49, 24);
             this.tsmiEdit.Text = "&Edit";
             // 
+            // tsmiCut
+            // 
+            this.tsmiCut.Name = "tsmiCut";
+            this.tsmiCut.Size = new System.Drawing.Size(136, 26);
+            this.tsmiCut.Text = "Cu&t";
+            // 
+            // tsmiCopy
+            // 
+            this.tsmiCopy.Name = "tsmiCopy";
+            this.tsmiCopy.Size = new System.Drawing.Size(136, 26);
+            this.tsmiCopy.Text = "&Copy";
+            // 
+            // tsmiPaste
+            // 
+            this.tsmiPaste.Name = "tsmiPaste";
+            this.tsmiPaste.Size = new System.Drawing.Size(136, 26);
+            this.tsmiPaste.Text = "&Paste";
+            // 
+            // tsmiDelete
+            // 
+            this.tsmiDelete.Name = "tsmiDelete";
+            this.tsmiDelete.Size = new System.Drawing.Size(136, 26);
+            this.tsmiDelete.Text = "&Delete";
+            // 
             // tsmiView
             // 
+            this.tsmiView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiAllRec,
+            this.tsmiInOnly,
+            this.tsmiExpOnly});
             this.tsmiView.Name = "tsmiView";
             this.tsmiView.Size = new System.Drawing.Size(55, 24);
             this.tsmiView.Text = "&View";
+            // 
+            // tsmiAllRec
+            // 
+            this.tsmiAllRec.Name = "tsmiAllRec";
+            this.tsmiAllRec.Size = new System.Drawing.Size(186, 26);
+            this.tsmiAllRec.Text = "&All Records";
+            // 
+            // tsmiInOnly
+            // 
+            this.tsmiInOnly.Name = "tsmiInOnly";
+            this.tsmiInOnly.Size = new System.Drawing.Size(186, 26);
+            this.tsmiInOnly.Text = "&Income Only";
+            // 
+            // tsmiExpOnly
+            // 
+            this.tsmiExpOnly.Name = "tsmiExpOnly";
+            this.tsmiExpOnly.Size = new System.Drawing.Size(186, 26);
+            this.tsmiExpOnly.Text = "Expe&nses Only";
             // 
             // ssMain
             // 
@@ -129,7 +191,7 @@
             this.sslBalance,
             this.sslNet,
             this.sslIncome,
-            this.sslExpenses});
+            this.sslExpense});
             this.ssMain.Location = new System.Drawing.Point(0, 424);
             this.ssMain.Name = "ssMain";
             this.ssMain.Size = new System.Drawing.Size(800, 26);
@@ -172,11 +234,11 @@
             this.sslIncome.Size = new System.Drawing.Size(68, 20);
             this.sslIncome.Text = "Income";
             // 
-            // sslExpenses
+            // sslExpense
             // 
-            this.sslExpenses.Name = "sslExpenses";
-            this.sslExpenses.Size = new System.Drawing.Size(69, 20);
-            this.sslExpenses.Text = "Expenses";
+            this.sslExpense.Name = "sslExpense";
+            this.sslExpense.Size = new System.Drawing.Size(69, 20);
+            this.sslExpense.Text = "Expenses";
             // 
             // pnlTree
             // 
@@ -199,6 +261,7 @@
             this.tvByMonth.Size = new System.Drawing.Size(247, 393);
             this.tvByMonth.TabIndex = 0;
             this.tvByMonth.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvByMonth_BeforeCollapse);
+            this.tvByMonth.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvByMonth_AfterSelect);
             // 
             // pnlChart
             // 
@@ -211,13 +274,31 @@
             // 
             // pnlRec
             // 
+            this.pnlRec.Controls.Add(this.gvRecord);
             this.pnlRec.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlRec.Location = new System.Drawing.Point(250, 28);
             this.pnlRec.Name = "pnlRec";
             this.pnlRec.Size = new System.Drawing.Size(550, 271);
             this.pnlRec.TabIndex = 4;
             // 
-            // frmMain
+            // gvRecord
+            // 
+            this.gvRecord.AllowUserToAddRows = false;
+            this.gvRecord.AllowUserToResizeRows = false;
+            this.gvRecord.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.gvRecord.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gvRecord.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvRecord.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gvRecord.Location = new System.Drawing.Point(0, 0);
+            this.gvRecord.Name = "gvRecord";
+            this.gvRecord.ReadOnly = true;
+            this.gvRecord.RowHeadersVisible = false;
+            this.gvRecord.RowHeadersWidth = 51;
+            this.gvRecord.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gvRecord.Size = new System.Drawing.Size(550, 271);
+            this.gvRecord.TabIndex = 0;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -227,7 +308,7 @@
             this.Controls.Add(this.pnlTree);
             this.Controls.Add(this.ssMain);
             this.Controls.Add(this.msMain);
-            this.Name = "frmMain";
+            this.Name = "MainForm";
             this.ShowIcon = false;
             this.Text = "Expense";
             this.msMain.ResumeLayout(false);
@@ -235,6 +316,8 @@
             this.ssMain.ResumeLayout(false);
             this.ssMain.PerformLayout();
             this.pnlTree.ResumeLayout(false);
+            this.pnlRec.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gvRecord)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,10 +346,18 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiSaveAs;
         private System.Windows.Forms.ToolStripMenuItem tsmiExit;
         private System.Windows.Forms.ToolStripMenuItem tsmiEdit;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCut;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCopy;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPaste;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
         private System.Windows.Forms.ToolStripMenuItem tsmiView;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAllRec;
+        private System.Windows.Forms.ToolStripMenuItem tsmiInOnly;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExpOnly;
         private System.Windows.Forms.ToolStripStatusLabel sslNet;
         private System.Windows.Forms.ToolStripStatusLabel sslIncome;
-        private System.Windows.Forms.ToolStripStatusLabel sslExpenses;
+        private System.Windows.Forms.ToolStripStatusLabel sslExpense;
+        private System.Windows.Forms.DataGridView gvRecord;
     }
 }
 
