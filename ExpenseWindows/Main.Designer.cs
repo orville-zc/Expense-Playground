@@ -297,6 +297,7 @@
             this.gvRecord.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gvRecord.Size = new System.Drawing.Size(550, 271);
             this.gvRecord.TabIndex = 0;
+            this.gvRecord.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvRecord_CellDoubleClick);
             // 
             // MainForm
             // 

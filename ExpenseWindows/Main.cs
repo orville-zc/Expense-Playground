@@ -32,10 +32,10 @@ namespace ExpenseWindows
                 { "k", "November" },
                 { "l", "December" }
         };
-        private Dictionary<string, Dictionary<string, List<Record>>> rec;
+        internal Dictionary<string, Dictionary<string, List<Record>>> rec;
         internal string path;
 
-        private DataGridViewTextBoxColumn tbcPropty, tbcCat, tbcAmt, tbcDate, tbcMemo;
+        private DataGridViewTextBoxColumn tbcType, tbcCat, tbcAmt, tbcDate, tbcMemo;
 
         public MainForm()
         {
@@ -46,17 +46,17 @@ namespace ExpenseWindows
             tbcCat = new DataGridViewTextBoxColumn();
             tbcDate = new DataGridViewTextBoxColumn();
             tbcMemo = new DataGridViewTextBoxColumn();
-            tbcPropty = new DataGridViewTextBoxColumn();
+            tbcType = new DataGridViewTextBoxColumn();
             gvRecord.Columns.AddRange(new DataGridViewColumn[] {
-                tbcPropty,
+                tbcType,
                 tbcCat,
                 tbcAmt,
                 tbcDate,
                 tbcMemo
             });
 
-            tbcPropty.HeaderText = "Property";
-            tbcPropty.Name = "tbcPropty";
+            tbcType.HeaderText = "Type";
+            tbcType.Name = "tbcType";
 
             tbcCat.HeaderText = "Category";
             tbcCat.Name = "tbcCat";
@@ -138,6 +138,11 @@ namespace ExpenseWindows
         {
             File.WriteAllText(path, Data.WriteJson(inCat, expCat, rec));
             Text = path + " - Expense";
+        }
+
+        private void gvRecord_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            new EntryForm().ShowDialog();
         }
     }
 }
