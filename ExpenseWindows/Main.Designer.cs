@@ -311,6 +311,7 @@
             this.Controls.Add(this.msMain);
             this.Name = "MainForm";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Expense";
             this.msMain.ResumeLayout(false);
             this.msMain.PerformLayout();

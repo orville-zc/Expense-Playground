@@ -476,6 +476,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Entry";
             this.TopMost = true;
             this.tableLayoutPanel1.ResumeLayout(false);
