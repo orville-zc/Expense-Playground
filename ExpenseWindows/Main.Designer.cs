@@ -44,6 +44,9 @@
             this.tsmiAllRec = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiInOnly = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExpOnly = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiTools = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiTax = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDisc = new System.Windows.Forms.ToolStripMenuItem();
             this.ssMain = new System.Windows.Forms.StatusStrip();
             this.sslDate = new System.Windows.Forms.ToolStripStatusLabel();
             this.sslMsg = new System.Windows.Forms.ToolStripStatusLabel();
@@ -69,7 +72,8 @@
             this.msMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiFile,
             this.tsmiEdit,
-            this.tsmiView});
+            this.tsmiView,
+            this.tsmiTools});
             this.msMain.Location = new System.Drawing.Point(0, 0);
             this.msMain.Name = "msMain";
             this.msMain.Size = new System.Drawing.Size(800, 28);
@@ -181,6 +185,27 @@
             this.tsmiExpOnly.Name = "tsmiExpOnly";
             this.tsmiExpOnly.Size = new System.Drawing.Size(186, 26);
             this.tsmiExpOnly.Text = "Expe&nses Only";
+            // 
+            // tsmiTools
+            // 
+            this.tsmiTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiTax,
+            this.tsmiDisc});
+            this.tsmiTools.Name = "tsmiTools";
+            this.tsmiTools.Size = new System.Drawing.Size(58, 24);
+            this.tsmiTools.Text = "&Tools";
+            // 
+            // tsmiTax
+            // 
+            this.tsmiTax.Name = "tsmiTax";
+            this.tsmiTax.Size = new System.Drawing.Size(209, 26);
+            this.tsmiTax.Text = "Set &Tax Rate";
+            // 
+            // tsmiDisc
+            // 
+            this.tsmiDisc.Name = "tsmiDisc";
+            this.tsmiDisc.Size = new System.Drawing.Size(209, 26);
+            this.tsmiDisc.Text = "Set &Discount Rate";
             // 
             // ssMain
             // 
@@ -360,6 +385,9 @@
         private System.Windows.Forms.ToolStripStatusLabel sslIncome;
         private System.Windows.Forms.ToolStripStatusLabel sslExpense;
         private System.Windows.Forms.DataGridView gvRecord;
+        private System.Windows.Forms.ToolStripMenuItem tsmiTools;
+        private System.Windows.Forms.ToolStripMenuItem tsmiTax;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDisc;
     }
 }
 
