@@ -15,7 +15,7 @@ namespace ExpenseLib
                 "Home", "Office", "Other"
             };
         }
-        //default categories with ids for expenses
+        //default categories for expenses
         public static List<string> getInCat()
         {
             return new List<string>
@@ -24,6 +24,6 @@ namespace ExpenseLib
                 "Gift", "Awards", "Other"
             };
         }
-        //default categories with ids for income
+        //default categories for income
     }
 }

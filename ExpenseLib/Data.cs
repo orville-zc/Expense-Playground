@@ -11,10 +11,17 @@ namespace ExpenseLib
         public static List<string> ReadCategory(JObject json, bool income)
         //used for both income and expenses categories, indicated by the boolan value
         {
-            return json.SelectToken("category." + (income ? "income" : "expense"))
-                    //determine to get income or expense categories
-                .ToObject<List<string>>();
-                //convert to list
+            JToken t = json.SelectToken("category." + (income ? "income" : "expense"));
+                                        //determine to get income or expense categories
+            return
+                (t == null) ? (income ? Category.getInCat() : Category.GetExpCat()) : t.ToObject<List<string>>();
+                //if null return the default categories                                 else convert to list
+        }
+        public static List<string> ReadUnit(JObject json)
+        {
+            JToken t = json.SelectToken("unit");
+            return (t == null) ? Unit.GetUnit() : t.ToObject<List<string>>();
+                //if null return default units, else convert to list
         }
         public static Dictionary<string, Dictionary<string, List<Record>>> ReadRecords(JObject json)
         {
@@ -25,16 +32,19 @@ namespace ExpenseLib
             //holding Record instances which are the records of each months
 
             List<JProperty> properties = json.Children<JProperty>().ToList();
-            //the first element holds the categories
-            //remains are entries for every year
+            
 
-            for (int i = 1; i < properties.Count; i++)
-            //start from the second element (the first year)
+            foreach (JProperty p in json.Children<JProperty>())
+            //the first elements hold the categories, units
+            //remains are entries for every year
             {
+                if (!p.Name.All(Char.IsDigit)) continue;
+                //bypass the elements for categories, units
+
                 Dictionary<string, List<Record>> records = new Dictionary<string, List<Record>>();
                 //initialize lists of records for each months
 
-                foreach (JProperty monthRec in properties[i].Values())
+                foreach (JProperty monthRec in p.Values())
                 //loop through every object holding the month and records of that month
                     records.Add(monthRec.Name,
                         //get the month as the key
@@ -42,7 +52,7 @@ namespace ExpenseLib
                             monthRec.Value.ToString()));
                             //get records of the month and convert to string
 
-                rec.Add(properties[i].Name, records);
+                rec.Add(p.Name, records);
                     //get the year and convert to integer
             }
 
@@ -67,7 +77,13 @@ namespace ExpenseLib
                 };
             //build up a dictionary containing all categories for converting to json
 
+            Dictionary<string, List<string>> units = new Dictionary<string, List<string>>
+            {
+                { "unit", Unit.GetUnit() }
+            };
+
             JObject output = (JObject)JToken.FromObject(category);
+            output.Merge((JObject)JToken.FromObject(units));
             output.Merge((JObject)JToken.FromObject(rec));
             //convert to json and merge as one
 
