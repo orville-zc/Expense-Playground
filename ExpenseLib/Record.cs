@@ -5,6 +5,8 @@ namespace ExpenseLib
 {
     public class Record
     {
+        private static int count = 0;
+        private int id;
         public decimal Amount { get; set; }
         public int Category { get; set; }
         public DateTime Date { get; set; }
@@ -28,6 +30,13 @@ namespace ExpenseLib
             Qty = (qty > 0.0) ? (double)qty : 0.0;
             Unit = (unit == null) ? -1 : (int)unit;
             Date = (date == null) ? DateTime.Today : (DateTime)date;
+            id = count;
+            count++;
+        }
+
+        public int GetId()
+        {
+            return id;
         }
     }
 }
