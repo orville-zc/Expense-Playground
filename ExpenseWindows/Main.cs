@@ -16,7 +16,7 @@ namespace ExpenseWindows
 {
     public partial class MainForm : Form
     {
-        internal List<string> inCat, expCat;
+        internal List<string> inCat, expCat, units;
         public readonly Dictionary<string, string> monthString =
             new Dictionary<string, string> {
                 { "a", "January" },
@@ -34,6 +34,7 @@ namespace ExpenseWindows
         };
         internal Dictionary<string, Dictionary<string, List<Record>>> rec;
         internal string path;
+        internal bool refresh = false;
 
         private DataGridViewTextBoxColumn tbcType, tbcCat, tbcAmt, tbcDate, tbcMemo;
 
@@ -88,6 +89,7 @@ namespace ExpenseWindows
 
             inCat = Data.ReadCategory(json, true);
             expCat = Data.ReadCategory(json, false);
+            units = Data.ReadUnit(json);
             rec = Data.ReadRecords(json);
 
             tvByMonth.Nodes.Clear();
@@ -112,14 +114,18 @@ namespace ExpenseWindows
         {
             e.Cancel = true;
         }
-
         private void tvByMonth_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            RefreshGv();
+        }
+        private void RefreshGv()
+        {
             gvRecord.Rows.Clear();
-            TreeNode selected = e.Node;
+            TreeNode selected = tvByMonth.SelectedNode;
+            rec[selected.Parent.Name][selected.Name] =
+                (List<Record>)rec[selected.Parent.Name][selected.Name].OrderByDescending(i => i.Date);
             if (selected.Parent != null)
-                foreach (Record r in
-                        rec[selected.Parent.Name][selected.Name].OrderByDescending(i => i.Date))
+                foreach (Record r in rec[selected.Parent.Name][selected.Name])
                     gvRecord.Rows.Add(
                         r.Exp ? "Expense" : "Income",
                         r.Exp ? expCat[r.Category] : inCat[r.Category],
@@ -127,6 +133,21 @@ namespace ExpenseWindows
                         r.Date.ToShortDateString(),
                         r.Memo
                     );
+        }
+
+        private enum RecOrderBy { }
+        private void SortRec(List<Record> rs)
+        {
+
+        }
+
+        private void gvRecord_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            TreeNode selected = tvByMonth.SelectedNode;
+            string year = selected.Parent.Name,
+                month = selected.Name;
+            new EntryForm(rec[year][month][e.RowIndex], true).ShowDialog();
+            if (refresh) RefreshGv();
         }
 
         private void tsmiExit_Click(object sender, EventArgs e)
@@ -138,11 +159,6 @@ namespace ExpenseWindows
         {
             File.WriteAllText(path, Data.WriteJson(inCat, expCat, rec));
             Text = path + " - Expense";
-        }
-
-        private void gvRecord_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            new EntryForm().ShowDialog();
         }
     }
 }

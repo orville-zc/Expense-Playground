@@ -48,13 +48,13 @@
             this.btn9 = new System.Windows.Forms.Button();
             this.btn8 = new System.Windows.Forms.Button();
             this.btn7 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtMemo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpRec = new System.Windows.Forms.DateTimePicker();
             this.btnDisct = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnTax = new System.Windows.Forms.Button();
@@ -63,7 +63,7 @@
             this.cboUnit = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.txtQty = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblAmt = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,6 +78,7 @@
             this.radExpenses.TabStop = true;
             this.radExpenses.Text = "&Expenses";
             this.radExpenses.UseVisualStyleBackColor = true;
+            this.radExpenses.CheckedChanged += new System.EventHandler(this.radExpenses_CheckedChanged);
             // 
             // radIncome
             // 
@@ -307,12 +308,12 @@
             this.btn7.Text = "7";
             this.btn7.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // txtMemo
             // 
-            this.textBox2.Location = new System.Drawing.Point(396, 167);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(170, 27);
-            this.textBox2.TabIndex = 4;
+            this.txtMemo.Location = new System.Drawing.Point(396, 167);
+            this.txtMemo.Name = "txtMemo";
+            this.txtMemo.Size = new System.Drawing.Size(170, 27);
+            this.txtMemo.TabIndex = 4;
             // 
             // label1
             // 
@@ -359,12 +360,12 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "Date:";
             // 
-            // dateTimePicker1
+            // dtpRec
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(396, 119);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(170, 27);
-            this.dateTimePicker1.TabIndex = 10;
+            this.dtpRec.Location = new System.Drawing.Point(396, 119);
+            this.dtpRec.Name = "dtpRec";
+            this.dtpRec.Size = new System.Drawing.Size(170, 27);
+            this.dtpRec.TabIndex = 10;
             // 
             // btnDisct
             // 
@@ -383,6 +384,7 @@
             this.btnOk.TabIndex = 12;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnTax
             // 
@@ -415,6 +417,8 @@
             // 
             this.cboUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUnit.FormattingEnabled = true;
+            this.cboUnit.Items.AddRange(new object[] {
+            "N/A"});
             this.cboUnit.Location = new System.Drawing.Point(511, 214);
             this.cboUnit.Name = "cboUnit";
             this.cboUnit.Size = new System.Drawing.Size(55, 28);
@@ -436,14 +440,14 @@
             this.txtQty.Size = new System.Drawing.Size(48, 27);
             this.txtQty.TabIndex = 4;
             // 
-            // label8
+            // lblAmt
             // 
-            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label8.Location = new System.Drawing.Point(113, 31);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(170, 27);
-            this.label8.TabIndex = 16;
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblAmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblAmt.Location = new System.Drawing.Point(113, 31);
+            this.lblAmt.Name = "lblAmt";
+            this.lblAmt.Size = new System.Drawing.Size(170, 27);
+            this.lblAmt.TabIndex = 16;
+            this.lblAmt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EntryForm
             // 
@@ -452,7 +456,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(596, 331);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.lblAmt);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.cboUnit);
             this.Controls.Add(this.label7);
@@ -461,14 +465,14 @@
             this.Controls.Add(this.btnTax);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.btnDisct);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtpRec);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtMemo);
             this.Controls.Add(this.cboCat);
             this.Controls.Add(this.radIncome);
             this.Controls.Add(this.radExpenses);
@@ -480,7 +484,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Entry";
+            this.Text = " an Entry";
             this.TopMost = true;
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -495,7 +499,7 @@
         private System.Windows.Forms.RadioButton radIncome;
         private System.Windows.Forms.ComboBox cboCat;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtMemo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -517,7 +521,7 @@
         private System.Windows.Forms.Button btn7;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpRec;
         private System.Windows.Forms.Button btnDisct;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnTax;
@@ -526,6 +530,6 @@
         private System.Windows.Forms.ComboBox cboUnit;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TextBox txtQty;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblAmt;
     }
 }
