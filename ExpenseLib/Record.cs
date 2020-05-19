@@ -12,11 +12,11 @@ namespace ExpenseLib
         //true when this record is an expense
         //false for income
         public string Memo { get; set; }
-        public double Qty { get; set; }
+        public decimal Qty { get; set; }
         public int Unit { get; set; }
 
         [JsonConstructor] //when reading from json, use this constructor
-        public Record(decimal amount, int? category, DateTime? date, bool? exp, string memo, double? qty, int? unit)
+        public Record(decimal amount, int? category, DateTime? date, bool? exp, string memo, decimal? qty, int? unit)
         {
             if (amount <= 0m) throw new ArgumentException("The amount should be positive.");
             if (unit != null && qty == null)
@@ -25,7 +25,7 @@ namespace ExpenseLib
             Category = (category == null) ? -1 : (int)category;
             Memo = memo;
             Exp = (exp == null) ? true : (bool)exp;
-            Qty = (qty > 0.0) ? (double)qty : 0.0;
+            Qty = (qty > 0m) ? (decimal)qty : 0m;
             Unit = (unit == null) ? -1 : (int)unit;
             Date = (date == null) ? DateTime.Today : (DateTime)date;
         }

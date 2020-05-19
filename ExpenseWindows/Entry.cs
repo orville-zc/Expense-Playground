@@ -66,8 +66,8 @@ namespace ExpenseWindows
                 )
                 try
                 {
-                    decimal amt = Convert.ToDecimal(lblAmt.Text);
-                    double qty = Convert.ToDouble(txtQty.Text);
+                    decimal amt = Convert.ToDecimal(lblAmt.Text),
+                        qty = Convert.ToDecimal(txtQty.Text);
                     r.Amount = amt;
                     r.Exp = radExpenses.Checked;
                     r.Category = cboCat.SelectedIndex - 1;
