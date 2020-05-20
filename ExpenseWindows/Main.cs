@@ -16,7 +16,6 @@ namespace ExpenseWindows
 {
     public partial class MainForm : Form
     {
-        internal List<string> inCat, expCat, units;
         public readonly Dictionary<string, string> monthString =
             new Dictionary<string, string> {
                 { "a", "January" },
@@ -32,9 +31,12 @@ namespace ExpenseWindows
                 { "k", "November" },
                 { "l", "December" }
         };
+        internal List<string> inCat, expCat, units;
         internal Dictionary<string, Dictionary<string, List<Record>>> rec;
+
         internal string path;
         internal bool refresh = false;
+        internal decimal tax, discount;
 
         private DataGridViewTextBoxColumn tbcType, tbcCat, tbcAmt, tbcDate, tbcMemo, tbcPrice, tbcID;
 
@@ -102,6 +104,8 @@ namespace ExpenseWindows
             expCat = Data.ReadCategory(json, false);
             units = Data.ReadUnit(json);
             rec = Data.ReadRecords(json);
+            tax = Data.ReadTax(json);
+            discount = Data.ReadDisct(json);
 
             tvByMonth.Nodes.Clear();
 
@@ -169,7 +173,7 @@ namespace ExpenseWindows
             if (refresh)
             {
                 RefreshGv();
-                Text = "*" + Text;
+                if (Text[0] != '*') Text = "*" + Text;
             }
             foreach (DataGridViewRow row in gvRecord.Rows)
                 row.Selected = (Convert.ToInt32(row.Cells[6].Value) == id) ? true : false;
@@ -182,7 +186,8 @@ namespace ExpenseWindows
 
         private void tsmiSave_Click(object sender, EventArgs e)
         {
-            File.WriteAllText(path, Data.WriteJson(inCat, expCat, rec));
+            if (Text[0] != '*') return;
+            File.WriteAllText(path, Data.WriteJson(inCat, expCat, rec, units, tax, discount));
             Text = path + " - Expense";
         }
     }
