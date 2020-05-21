@@ -15,7 +15,7 @@ namespace ExpenseWindows
         private enum Operator { None, Plus, Minus}
 
         internal Record r;
-        private bool taxed = false, discApp = false, dot = false;
+        private bool taxed = false, discApp = false, dot = false, newRec;
         private decimal tmp = 0m;
         //temporary number for calculations
         private Operator op = Operator.None;
@@ -23,16 +23,19 @@ namespace ExpenseWindows
         //the position of the operator
         private string defaultText;
 
-        public EntryForm(Record r, bool edit)
+        public EntryForm(Record r, bool newRec)
         {
             InitializeComponent();
 
-            defaultText = Text = (edit ? "Edit" : "Create") + Text;
+            defaultText = Text = (newRec ? "Create" : "Edit") + Text;
 
             this.r = r;
-            tmp = r.Amount;
+            this.newRec = newRec;
 
-            lblAmt.Text = r.Amount.ToString("G29");
+
+            tmp = newRec ? 0m : r.Amount;
+
+            lblAmt.Text = newRec ? String.Empty : r.Amount.ToString("G29");
             dot = (r.Amount != Convert.ToInt32(r.Amount));
 
             (r.Exp ? radExpenses : radIncome).Checked = true;
@@ -254,7 +257,7 @@ namespace ExpenseWindows
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (
+            if ( newRec ||
                 lblAmt.Text != r.Amount.ToString("G29") ||
                 r.Exp != radExpenses.Checked ||
                 cboCat.SelectedIndex != r.Category + 1 ||
@@ -265,17 +268,13 @@ namespace ExpenseWindows
                 )
                 try
                 {
-                    if (r.Date.Year != dtpRec.Value.Year || r.Date.Month != dtpRec.Value.Month)
-                    //if in a different month
+                    if (r.Date.Year != dtpRec.Value.Year || r.Date.Month != dtpRec.Value.Month || newRec)
+                    //if in a different month or a new record
                     {
                         var rec = Program.frmMain.rec;
                         string newYear = dtpRec.Value.Year.ToString(),
                             newMonth = Encoding.ASCII.GetString(
                                 new byte[] { (byte)(dtpRec.Value.Month + 96) }
-                                ),
-                            oldYear = r.Date.Year.ToString(),
-                            oldMonth = Encoding.ASCII.GetString(
-                                new byte[] { (byte)(r.Date.Month + 96) }
                                 );
 
                         if (rec.ContainsKey(newYear))  //if there are records in the year
@@ -285,19 +284,27 @@ namespace ExpenseWindows
                                 rec[newYear].Add(newMonth, new List<Record> { r });  //add a new month then the record
                         else  //none in the year
                             rec[newYear] = new Dictionary<string, List<Record>> { { newMonth, new List<Record> { r } } };
-                            //add a new year with the month and the record
+                        //add a new year with the month and the record
 
-                        rec[oldYear][oldMonth].Remove(r);
-
-                        if (rec[oldYear][oldMonth].Count == 0)
+                        if (!newRec)
                         {
-                            rec[oldYear].Remove(oldMonth);
-                            if (Program.frmMain.selected.Parent.Name == oldYear &&
-                                    Program.frmMain.selected.Name == oldMonth)
-                                Program.frmMain.selected = null;
+                            string oldYear = r.Date.Year.ToString(),
+                                oldMonth = Encoding.ASCII.GetString(
+                                    new byte[] { (byte)(r.Date.Month + 96) }
+                                    );
+
+                            rec[oldYear][oldMonth].Remove(r);
+
+                            if (rec[oldYear][oldMonth].Count == 0)
+                            {
+                                rec[oldYear].Remove(oldMonth);
+                                if (Program.frmMain.selected.Parent.Name == oldYear &&
+                                        Program.frmMain.selected.Name == oldMonth)
+                                    Program.frmMain.selected = null;
+                            }
+                            if (rec[oldYear].Count == 0)
+                                rec.Remove(oldYear);
                         }
-                        if (rec[oldYear].Count == 0)
-                            rec.Remove(oldYear);
                     }
 
                     decimal amt = Convert.ToDecimal(lblAmt.Text),

@@ -111,6 +111,14 @@ namespace ExpenseWindows
             RefreshTv();
         }
 
+        private void ChangeMade()
+        {
+            RefreshGv();
+            RefreshTv();
+            if (Text[0] != '*') Text = "*" + Text;
+            refresh = false;
+        }
+
         private void RefreshTv()
         {
             tvByMonth.Nodes.Clear();
@@ -127,8 +135,9 @@ namespace ExpenseWindows
                     mnode.Name = month;
                     ynode.Nodes.Add(mnode);
                     if (selected != null &&
-                            ynode.Text == selected.Parent.Text
-                            && mnode.Text == selected.Text)
+                            selected.Parent != null &&
+                            ynode.Text == selected.Parent.Text &&
+                            mnode.Text == selected.Text)
                         tvByMonth.SelectedNode = selected = mnode;
                 }
             }
@@ -183,21 +192,10 @@ namespace ExpenseWindows
             int id = Convert.ToInt32(gvRecord.Rows[e.RowIndex].Cells[6].Value);
             string year = selected.Parent.Name,
                 month = selected.Name;
-            new EntryForm(rec[year][month][id], true).ShowDialog();
-            if (refresh)
-            {
-                RefreshGv();
-                RefreshTv();
-                if (Text[0] != '*') Text = "*" + Text;
-                refresh = false;
-            }
+            new EntryForm(rec[year][month][id], false).ShowDialog();
+            if (refresh) ChangeMade();
             foreach (DataGridViewRow row in gvRecord.Rows)
                 row.Selected = (Convert.ToInt32(row.Cells[6].Value) == id) ? true : false;
-        }
-
-        private void tsmiExit_Click(object sender, EventArgs e)
-        {
-            Close();
         }
 
         private void tsmiSave_Click(object sender, EventArgs e)
@@ -205,6 +203,23 @@ namespace ExpenseWindows
             if (Text[0] != '*') return;
             File.WriteAllText(path, Data.WriteJson(inCat, expCat, rec, units, tax, discount));
             Text = path + " - Expense";
+        }
+
+        private void tsmiExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        private void tsmiAdd_Click(object sender, EventArgs e)
+        {
+            new EntryForm(
+                    new Record(1m, null, null, null, String.Empty, null, null),
+                true).ShowDialog();
+            ChangeMade();
+        }
+
+        private void TaxDisc_Click(object sender, EventArgs e)
+        {
+            new TaxDisc(((ToolStripMenuItem)sender).Name == "tsmiTax").ShowDialog();
         }
     }
 }
