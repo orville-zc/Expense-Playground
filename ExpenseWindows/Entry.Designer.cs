@@ -87,7 +87,7 @@
             this.radIncome.Location = new System.Drawing.Point(487, 32);
             this.radIncome.Name = "radIncome";
             this.radIncome.Size = new System.Drawing.Size(79, 24);
-            this.radIncome.TabIndex = 0;
+            this.radIncome.TabIndex = 1;
             this.radIncome.TabStop = true;
             this.radIncome.Text = "&Income";
             this.radIncome.UseVisualStyleBackColor = true;
@@ -100,7 +100,7 @@
             this.cboCat.Location = new System.Drawing.Point(396, 75);
             this.cboCat.Name = "cboCat";
             this.cboCat.Size = new System.Drawing.Size(170, 28);
-            this.cboCat.TabIndex = 1;
+            this.cboCat.TabIndex = 2;
             // 
             // tableLayoutPanel1
             // 
@@ -364,7 +364,7 @@
             this.txtMemo.Location = new System.Drawing.Point(396, 167);
             this.txtMemo.Name = "txtMemo";
             this.txtMemo.Size = new System.Drawing.Size(170, 27);
-            this.txtMemo.TabIndex = 3;
+            this.txtMemo.TabIndex = 4;
             // 
             // label1
             // 
@@ -416,7 +416,7 @@
             this.dtpRec.Location = new System.Drawing.Point(396, 119);
             this.dtpRec.Name = "dtpRec";
             this.dtpRec.Size = new System.Drawing.Size(170, 27);
-            this.dtpRec.TabIndex = 2;
+            this.dtpRec.TabIndex = 3;
             // 
             // btnDisct
             // 
@@ -480,7 +480,7 @@
             this.cboUnit.Location = new System.Drawing.Point(511, 214);
             this.cboUnit.Name = "cboUnit";
             this.cboUnit.Size = new System.Drawing.Size(55, 28);
-            this.cboUnit.TabIndex = 5;
+            this.cboUnit.TabIndex = 6;
             // 
             // btnCancel
             // 
@@ -497,7 +497,7 @@
             this.txtQty.Location = new System.Drawing.Point(396, 215);
             this.txtQty.Name = "txtQty";
             this.txtQty.Size = new System.Drawing.Size(48, 27);
-            this.txtQty.TabIndex = 4;
+            this.txtQty.TabIndex = 5;
             // 
             // lblAmt
             // 

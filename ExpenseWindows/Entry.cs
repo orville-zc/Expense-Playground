@@ -265,6 +265,41 @@ namespace ExpenseWindows
                 )
                 try
                 {
+                    if (r.Date.Year != dtpRec.Value.Year || r.Date.Month != dtpRec.Value.Month)
+                    //if in a different month
+                    {
+                        var rec = Program.frmMain.rec;
+                        string newYear = dtpRec.Value.Year.ToString(),
+                            newMonth = Encoding.ASCII.GetString(
+                                new byte[] { (byte)(dtpRec.Value.Month + 96) }
+                                ),
+                            oldYear = r.Date.Year.ToString(),
+                            oldMonth = Encoding.ASCII.GetString(
+                                new byte[] { (byte)(r.Date.Month + 96) }
+                                );
+
+                        if (rec.ContainsKey(newYear))  //if there are records in the year
+                            if (rec[newYear].ContainsKey(newMonth))  //and in the month
+                                rec[newYear][newMonth].Add(r);  //add the record
+                            else  //none in the month
+                                rec[newYear].Add(newMonth, new List<Record> { r });  //add a new month then the record
+                        else  //none in the year
+                            rec[newYear] = new Dictionary<string, List<Record>> { { newMonth, new List<Record> { r } } };
+                            //add a new year with the month and the record
+
+                        rec[oldYear][oldMonth].Remove(r);
+
+                        if (rec[oldYear][oldMonth].Count == 0)
+                        {
+                            rec[oldYear].Remove(oldMonth);
+                            if (Program.frmMain.selected.Parent.Name == oldYear &&
+                                    Program.frmMain.selected.Name == oldMonth)
+                                Program.frmMain.selected = null;
+                        }
+                        if (rec[oldYear].Count == 0)
+                            rec.Remove(oldYear);
+                    }
+
                     decimal amt = Convert.ToDecimal(lblAmt.Text),
                         qty = Convert.ToDecimal(txtQty.Text);
                     r.Amount = amt;
@@ -275,6 +310,7 @@ namespace ExpenseWindows
                     r.Qty = qty;
                     r.Unit = cboUnit.SelectedIndex - 1;
                     Program.frmMain.refresh = true;
+
                     Close();
                 }
                 catch (FormatException)

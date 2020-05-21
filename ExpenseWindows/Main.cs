@@ -37,6 +37,7 @@ namespace ExpenseWindows
         internal string path;
         internal bool refresh = false;
         internal decimal tax, discount;
+        internal TreeNode selected;
 
         private DataGridViewTextBoxColumn tbcType, tbcCat, tbcAmt, tbcDate, tbcMemo, tbcPrice, tbcID;
 
@@ -107,6 +108,11 @@ namespace ExpenseWindows
             tax = Data.ReadTax(json);
             discount = Data.ReadDisct(json);
 
+            RefreshTv();
+        }
+
+        private void RefreshTv()
+        {
             tvByMonth.Nodes.Clear();
 
             foreach (string year in rec.Keys.OrderByDescending(i => i))
@@ -120,6 +126,10 @@ namespace ExpenseWindows
                     TreeNode mnode = new TreeNode(monthString[month]);
                     mnode.Name = month;
                     ynode.Nodes.Add(mnode);
+                    if (selected != null &&
+                            ynode.Text == selected.Parent.Text
+                            && mnode.Text == selected.Text)
+                        tvByMonth.SelectedNode = selected = mnode;
                 }
             }
             tvByMonth.ExpandAll();
@@ -131,29 +141,34 @@ namespace ExpenseWindows
         }
         private void tvByMonth_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            selected = tvByMonth.SelectedNode;
             RefreshGv();
         }
         private void RefreshGv()
         {
             gvRecord.Rows.Clear();
-            TreeNode selected = tvByMonth.SelectedNode;
-            if (selected.Parent == null) return;
+            if (selected == null || selected.Parent == null) return;
             //if not selecting a month, just clear the grid view
             int n = 0;
             //declare a counter
             foreach (Record r in rec[selected.Parent.Name][selected.Name])
             {
-                string price = (r.Qty == 0m) ? "N/A" : (r.Amount / r.Qty).ToString("C2");
+                string cate = (r.Category == -1) ?
+                                "Uncategorized" :
+                                (r.Exp ? expCat[r.Category] : inCat[r.Category]),
+                    price = (r.Qty == 0m) ? "N/A" : (r.Amount / r.Qty).ToString("C2");
                 if (r.Unit != -1) price += "/" + units[r.Unit];
+
                 gvRecord.Rows.Add(
                     r.Exp ? "Expense" : "Income",
-                    r.Exp ? expCat[r.Category] : inCat[r.Category],
+                    cate,
                     r.Amount.ToString("C2"),
                     r.Date.ToShortDateString(),
                     r.Memo,
                     price,
                     n
                 );
+
                 n++;
                 if (gvRecord.SortedColumn == null)
                     gvRecord.Sort(tbcDate, ListSortDirection.Descending);
@@ -166,14 +181,15 @@ namespace ExpenseWindows
         {
             if (e.RowIndex == -1) return;
             int id = Convert.ToInt32(gvRecord.Rows[e.RowIndex].Cells[6].Value);
-            TreeNode selected = tvByMonth.SelectedNode;
             string year = selected.Parent.Name,
                 month = selected.Name;
             new EntryForm(rec[year][month][id], true).ShowDialog();
             if (refresh)
             {
                 RefreshGv();
+                RefreshTv();
                 if (Text[0] != '*') Text = "*" + Text;
+                refresh = false;
             }
             foreach (DataGridViewRow row in gvRecord.Rows)
                 row.Selected = (Convert.ToInt32(row.Cells[6].Value) == id) ? true : false;

@@ -36,6 +36,7 @@
             this.tsmiSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCut = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPaste = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,6 +127,7 @@
             // tsmiEdit
             // 
             this.tsmiEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiAdd,
             this.tsmiCut,
             this.tsmiCopy,
             this.tsmiPaste,
@@ -133,6 +135,12 @@
             this.tsmiEdit.Name = "tsmiEdit";
             this.tsmiEdit.Size = new System.Drawing.Size(49, 24);
             this.tsmiEdit.Text = "&Edit";
+            // 
+            // tsmiAdd
+            // 
+            this.tsmiAdd.Name = "tsmiAdd";
+            this.tsmiAdd.Size = new System.Drawing.Size(136, 26);
+            this.tsmiAdd.Text = "&Add";
             // 
             // tsmiCut
             // 
@@ -388,6 +396,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiTools;
         private System.Windows.Forms.ToolStripMenuItem tsmiTax;
         private System.Windows.Forms.ToolStripMenuItem tsmiDisc;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAdd;
     }
 }
 
