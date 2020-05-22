@@ -26,37 +26,34 @@
       "Other"
     ]
   },
+  "unit": [
+    "g",
+    "lbs",
+    "kg"
+  ],
+  "tax": 1.13,
+  "discount": 0.9,
   "2020": {
-    "d": [
-      {
-        "Amount": 10.0,
-        "Category": 1,
-        "Date": "2020-04-30T00:00:00",
-        "Exp": true,
-        "Memo": "sth"
-      },
-      {
-        "Amount": 20.0,
-        "Category": 0,
-        "Date": "2020-04-30T00:00:00",
-        "Exp": true,
-        "Memo": "gf"
-      }
-    ],
     "e": [
       {
-        "Amount": 10.0,
-        "Category": 1,
-        "Date": "2020-05-30T00:00:00",
+        "Amount": 16.95,
+        "Category": 5,
+        "Date": "2020-05-01T00:00:00",
         "Exp": true,
-        "Memo": "sth"
-      },
+        "Memo": "Lunch",
+        "Qty": 0.0,
+        "Unit": -1
+      }
+    ],
+    "d": [
       {
-        "Amount": 14.0,
-        "Category": 0,
-        "Date": "2020-05-30T00:00:00",
-        "Exp": true,
-        "Memo": "sd"
+        "Amount": 1200.0,
+        "Category": 1,
+        "Date": "2020-04-30T00:00:00",
+        "Exp": false,
+        "Memo": "",
+        "Qty": 0.0,
+        "Unit": -1
       }
     ]
   }
