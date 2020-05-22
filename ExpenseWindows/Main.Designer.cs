@@ -36,9 +36,8 @@
             this.tsmiSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiView = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAllRec = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,37 +125,34 @@
             // tsmiEdit
             // 
             this.tsmiEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiCut,
+            this.tsmiAdd,
             this.tsmiCopy,
-            this.tsmiPaste,
             this.tsmiDelete});
             this.tsmiEdit.Name = "tsmiEdit";
             this.tsmiEdit.Size = new System.Drawing.Size(49, 24);
             this.tsmiEdit.Text = "&Edit";
             // 
-            // tsmiCut
+            // tsmiAdd
             // 
-            this.tsmiCut.Name = "tsmiCut";
-            this.tsmiCut.Size = new System.Drawing.Size(136, 26);
-            this.tsmiCut.Text = "Cu&t";
+            this.tsmiAdd.Name = "tsmiAdd";
+            this.tsmiAdd.Size = new System.Drawing.Size(136, 26);
+            this.tsmiAdd.Text = "&Add";
+            this.tsmiAdd.Click += new System.EventHandler(this.tsmiAdd_Click);
             // 
             // tsmiCopy
             // 
+            this.tsmiCopy.Enabled = false;
             this.tsmiCopy.Name = "tsmiCopy";
             this.tsmiCopy.Size = new System.Drawing.Size(136, 26);
             this.tsmiCopy.Text = "&Copy";
             // 
-            // tsmiPaste
-            // 
-            this.tsmiPaste.Name = "tsmiPaste";
-            this.tsmiPaste.Size = new System.Drawing.Size(136, 26);
-            this.tsmiPaste.Text = "&Paste";
-            // 
             // tsmiDelete
             // 
+            this.tsmiDelete.Enabled = false;
             this.tsmiDelete.Name = "tsmiDelete";
             this.tsmiDelete.Size = new System.Drawing.Size(136, 26);
             this.tsmiDelete.Text = "&Delete";
+            this.tsmiDelete.Click += new System.EventHandler(this.tsmiDelete_Click);
             // 
             // tsmiView
             // 
@@ -200,12 +196,14 @@
             this.tsmiTax.Name = "tsmiTax";
             this.tsmiTax.Size = new System.Drawing.Size(209, 26);
             this.tsmiTax.Text = "Set &Tax Rate";
+            this.tsmiTax.Click += new System.EventHandler(this.TaxDisc_Click);
             // 
             // tsmiDisc
             // 
             this.tsmiDisc.Name = "tsmiDisc";
             this.tsmiDisc.Size = new System.Drawing.Size(209, 26);
             this.tsmiDisc.Text = "Set &Discount Rate";
+            this.tsmiDisc.Click += new System.EventHandler(this.TaxDisc_Click);
             // 
             // ssMain
             // 
@@ -323,6 +321,7 @@
             this.gvRecord.Size = new System.Drawing.Size(550, 271);
             this.gvRecord.TabIndex = 0;
             this.gvRecord.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvRecord_CellDoubleClick);
+            this.gvRecord.SelectionChanged += new System.EventHandler(this.gvRecord_SelectionChanged);
             // 
             // MainForm
             // 
@@ -373,21 +372,20 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiSaveAs;
         private System.Windows.Forms.ToolStripMenuItem tsmiExit;
         private System.Windows.Forms.ToolStripMenuItem tsmiEdit;
-        private System.Windows.Forms.ToolStripMenuItem tsmiCut;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAdd;
         private System.Windows.Forms.ToolStripMenuItem tsmiCopy;
-        private System.Windows.Forms.ToolStripMenuItem tsmiPaste;
         private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
         private System.Windows.Forms.ToolStripMenuItem tsmiView;
         private System.Windows.Forms.ToolStripMenuItem tsmiAllRec;
         private System.Windows.Forms.ToolStripMenuItem tsmiInOnly;
         private System.Windows.Forms.ToolStripMenuItem tsmiExpOnly;
+        private System.Windows.Forms.ToolStripMenuItem tsmiTools;
+        private System.Windows.Forms.ToolStripMenuItem tsmiTax;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDisc;
         private System.Windows.Forms.ToolStripStatusLabel sslNet;
         private System.Windows.Forms.ToolStripStatusLabel sslIncome;
         private System.Windows.Forms.ToolStripStatusLabel sslExpense;
         private System.Windows.Forms.DataGridView gvRecord;
-        private System.Windows.Forms.ToolStripMenuItem tsmiTools;
-        private System.Windows.Forms.ToolStripMenuItem tsmiTax;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDisc;
     }
 }
 

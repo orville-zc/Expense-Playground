@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ExpenseWindows
@@ -11,13 +8,15 @@ namespace ExpenseWindows
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
+        internal static MainForm frmMain;
         [STAThread]
         static void Main()
         {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            frmMain = new MainForm();
+            Application.Run(frmMain);
         }
     }
 }

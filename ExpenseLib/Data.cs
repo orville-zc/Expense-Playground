@@ -17,12 +17,28 @@ namespace ExpenseLib
                 (t == null) ? (income ? Category.getInCat() : Category.GetExpCat()) : t.ToObject<List<string>>();
                 //if null return the default categories                                 else convert to list
         }
+
         public static List<string> ReadUnit(JObject json)
         {
             JToken t = json.SelectToken("unit");
             return (t == null) ? Unit.GetUnit() : t.ToObject<List<string>>();
                 //if null return default units, else convert to list
         }
+
+        public static decimal ReadTax(JObject json)
+        {
+            JToken t = json.SelectToken("tax");
+            return (t == null) ? 1.13m : t.ToObject<decimal>();
+            //if null return default tax rate, else convert to decimal
+        }
+
+        public static decimal ReadDisct(JObject json)
+        {
+            JToken t = json.SelectToken("discount");
+            return (t == null) ? 1m : t.ToObject<decimal>();
+            //if null return default discount rate, else convert to decimal
+        }
+
         public static Dictionary<string, Dictionary<string, List<Record>>> ReadRecords(JObject json)
         {
             Dictionary<string, Dictionary<string, List<Record>>> rec =
@@ -58,12 +74,16 @@ namespace ExpenseLib
 
             return rec;
         }
+
         public static string WriteJson(
             List<string> inCat, //income categories
             List<string> expCat, //expense categories
-            Dictionary<string, Dictionary<string, List<Record>>> rec) //records
+            Dictionary<string, Dictionary<string, List<Record>>> rec,
+            List<string> unitList,
+            decimal tax,
+            decimal discount) //records
         {
-            Dictionary<string, Dictionary<string, List<string>>> category =
+            JObject output = (JObject)JToken.FromObject(
                 new Dictionary<string, Dictionary<string, List<string>>>
                 {
                     {
@@ -74,16 +94,24 @@ namespace ExpenseLib
                             { "expense", expCat }
                         }
                     }
-                };
-            //build up a dictionary containing all categories for converting to json
+                }
+            );
 
-            Dictionary<string, List<string>> units = new Dictionary<string, List<string>>
-            {
-                { "unit", Unit.GetUnit() }
-            };
+            output.Merge((JObject)JToken.FromObject(
+                new Dictionary<string, List<string>>
+                {
+                    { "unit", unitList }
+                }
+            ));
 
-            JObject output = (JObject)JToken.FromObject(category);
-            output.Merge((JObject)JToken.FromObject(units));
+            output.Merge((JObject)JToken.FromObject(
+                new Dictionary<string, decimal>
+                {
+                    { "tax", tax },
+                    { "discount",  discount}
+                }
+            ));
+
             output.Merge((JObject)JToken.FromObject(rec));
             //convert to json and merge as one
 
