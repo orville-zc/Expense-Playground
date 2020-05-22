@@ -34,7 +34,7 @@ namespace ExpenseWindows
         internal List<string> inCat, expCat, units;
         internal Dictionary<string, Dictionary<string, List<Record>>> rec;
 
-        internal string path;
+        internal string path, year, month;
         internal bool refresh = false;
         internal decimal tax, discount;
         internal TreeNode selected;
@@ -151,6 +151,10 @@ namespace ExpenseWindows
         private void tvByMonth_AfterSelect(object sender, TreeViewEventArgs e)
         {
             selected = tvByMonth.SelectedNode;
+            if (selected.Parent != null)
+                year = selected.Parent.Name;
+            if (selected != null)
+                month = selected.Name;
             RefreshGv();
         }
         private void RefreshGv()
@@ -160,7 +164,7 @@ namespace ExpenseWindows
             //if not selecting a month, just clear the grid view
             int n = 0;
             //declare a counter
-            foreach (Record r in rec[selected.Parent.Name][selected.Name])
+            foreach (Record r in rec[year][month])
             {
                 string cate = (r.Category == -1) ?
                                 "Uncategorized" :
@@ -190,12 +194,15 @@ namespace ExpenseWindows
         {
             if (e.RowIndex == -1) return;
             int id = Convert.ToInt32(gvRecord.Rows[e.RowIndex].Cells[6].Value);
-            string year = selected.Parent.Name,
-                month = selected.Name;
             new EntryForm(rec[year][month][id], false).ShowDialog();
             if (refresh) ChangeMade();
             foreach (DataGridViewRow row in gvRecord.Rows)
                 row.Selected = (Convert.ToInt32(row.Cells[6].Value) == id) ? true : false;
+        }
+
+        private void gvRecord_SelectionChanged(object sender, EventArgs e)
+        {
+            tsmiDelete.Enabled = (gvRecord.SelectedRows.Count != 0 && !tsmiDelete.Enabled);
         }
 
         private void tsmiSave_Click(object sender, EventArgs e)
@@ -214,6 +221,22 @@ namespace ExpenseWindows
             new EntryForm(
                     new Record(1m, null, null, null, String.Empty, null, null),
                 true).ShowDialog();
+            ChangeMade();
+        }
+
+        private void tsmiDelete_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gvRecord.SelectedRows)
+                rec[year][month].RemoveAt((int)row.Cells[6].Value);
+
+            if (rec[year][month].Count == 0)
+            {
+                rec[year].Remove(month);
+                selected = null;
+            }
+            if (rec[year].Count == 0)
+                rec.Remove(year);
+
             ChangeMade();
         }
 

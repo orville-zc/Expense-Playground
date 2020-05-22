@@ -152,6 +152,7 @@
             this.tsmiDelete.Name = "tsmiDelete";
             this.tsmiDelete.Size = new System.Drawing.Size(136, 26);
             this.tsmiDelete.Text = "&Delete";
+            this.tsmiDelete.Click += new System.EventHandler(this.tsmiDelete_Click);
             // 
             // tsmiView
             // 
@@ -320,6 +321,7 @@
             this.gvRecord.Size = new System.Drawing.Size(550, 271);
             this.gvRecord.TabIndex = 0;
             this.gvRecord.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvRecord_CellDoubleClick);
+            this.gvRecord.SelectionChanged += new System.EventHandler(this.gvRecord_SelectionChanged);
             // 
             // MainForm
             // 
