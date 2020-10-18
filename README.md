@@ -1,2 +1,2 @@
 # Expense
-Track you expenses
+Track expenses
